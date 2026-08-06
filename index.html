@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Create and export ceremonial Maldives event posters in Dhivehi or English."
+    />
+    <title>Poster Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#editor">Skip to editor</a>
+    <header class="appbar">
+      <div class="brand">
+        <strong>Poster Generator</strong>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="saveBtn" type="button">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M5 4h12l2 2v14H5V4Z" />
+            <path d="M8 4v6h8V4M8 20v-6h8v6" /></svg
+          ><span>Save</span>
+        </button>
+        <button class="btn secondary" id="loadBtn" type="button">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M4 4v6h6" />
+            <path d="M20 11a8 8 0 1 0-2.3 5.7L20 14" /></svg
+          ><span>Load</span>
+        </button>
+        <button class="btn btn-primary" id="downloadBtn" type="button">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+          >
+            <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 20h16" /></svg
+          ><span>Download PNG</span>
+        </button>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="editor" id="editor" aria-label="Poster editor">
+        <div id="layoutWarning" class="notice" role="alert">
+          Some content is too long for the poster. Shorten the highlighted text
+          or reduce its font size.
+        </div>
+        <div class="accordion">
+          <details open>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" />
+                  <path
+                    d="m16 5 .7 1.5L18 7l-1.3.5L16 9l-.7-1.5L14 7l1.3-.5L16 5Z"
+                  /></svg></span
+              >ބިސްމިން
+            </summary>
+            <div class="panel">
+              <label class="upload" for="bismillahUpload"
+                ><span
+                  ><strong>Choose Bismillah artwork</strong
+                  ><small>PNG or SVG · transparent background recommended</small></span
+                ><input
+                  id="bismillahUpload"
+                  type="file"
+                  accept="image/png,image/svg+xml"
+                />
+              </label>
+              <div class="error" id="bismillahError"></div>
+              <div class="grid2">
+                <div class="field">
+                  <label for="bismillahWidth"
+                    >Image width <output id="bismillahWidthOut"></output></label
+                  ><input id="bismillahWidth" type="range" min="40" max="700" />
+                </div>
+                <div class="field">
+                  <label for="bismillahColor">Artwork color</label
+                  ><input id="bismillahColor" type="color" />
+                </div>
+              </div>
+              <label class="check" for="showBismillah"
+                ><input id="showBismillah" type="checkbox" /> Show
+                Bismillah</label
+              >
+              <div class="subactions">
+                <button class="btn tiny btn-danger" id="removeBismillah" type="button">
+                  Remove artwork
+                </button>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path
+                    d="M12 3 5 7v5c0 4.7 2.8 7.6 7 9 4.2-1.4 7-4.3 7-9V7l-7-4Z"
+                  />
+                  <path d="M9 14h6M10 14v-3a2 2 0 0 1 4 0v3" /></svg></span
+              >ނިޝާން
+            </summary>
+            <div class="panel">
+              <label class="upload" for="logoUpload"
+                ><span
+                  ><strong>Choose a logo</strong
+                  ><small
+                    >PNG, JPG, WebP or SVG · transparent PNG recommended</small
+                  ></span
+                ><input
+                  id="logoUpload"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
+              /></label>
+              <div class="error" id="logoError"></div>
+              <div class="grid2">
+                <div class="field">
+                  <label for="logoWidth"
+                    >Logo width <output id="logoWidthOut"></output></label
+                  ><input id="logoWidth" type="range" min="40" max="250" />
+                </div>
+                <div class="field">
+                  <label for="logoY"
+                    >Vertical position <output id="logoYOut"></output></label
+                  ><input id="logoY" type="range" min="60" max="320" />
+                </div>
+              </div>
+              <label class="check" for="showLogo"
+                ><input id="showLogo" type="checkbox" /> Show logo</label
+              >
+              <div class="subactions">
+                <button
+                  class="btn tiny btn-danger"
+                  id="removeLogo"
+                  type="button"
+                >
+                  Remove logo
+                </button>
+              </div>
+            </div>
+          </details>
+          <details open>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path d="M4 6h16M8 10h8M6 14h12M9 18h6" /></svg></span
+              >ސުރުޙީ
+            </summary>
+            <div class="panel">
+              <div class="field">
+                <label for="title1">Title 1</label
+                ><textarea class="rtl" id="title1"></textarea>
+              </div>
+              <div class="grid3">
+                <div class="field">
+                  <label for="title1Size"
+                    >Size <output id="title1SizeOut"></output></label
+                  ><input id="title1Size" type="range" min="28" max="92" />
+                </div>
+                <div class="field">
+                  <label for="title1Color">Color</label
+                  ><input id="title1Color" type="color" />
+                </div>
+                <div class="field">
+                  <label for="title1Weight">Weight</label
+                  ><select id="title1Weight">
+                    <option value="400">Regular</option>
+                    <option value="700">Bold</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="title2">Title 2</label
+                ><textarea class="rtl" id="title2"></textarea>
+              </div>
+              <div class="grid3">
+                <div class="field">
+                  <label for="title2Size"
+                    >Size <output id="title2SizeOut"></output></label
+                  ><input id="title2Size" type="range" min="24" max="72" />
+                </div>
+                <div class="field">
+                  <label for="title2Color">Color</label
+                  ><input id="title2Color" type="color" />
+                </div>
+                <div class="field">
+                  <label for="title2Weight">Weight</label
+                  ><select id="title2Weight">
+                    <option value="400">Regular</option>
+                    <option value="700">Bold</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="direction">Text direction</label
+                ><select id="direction">
+                  <option value="rtl">Dhivehi / right to left</option>
+                  <option value="ltr">English / left to right</option>
+                </select>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <rect x="4" y="5" width="16" height="15" rx="2" />
+                  <path
+                    d="M8 3v4m8-4v4M4 10h16M8 14h3m2 0h3m-8 3h3"
+                  /></svg></span
+              >ވަގުތާއި ތާރީޙް
+            </summary>
+            <div class="panel">
+              <div class="field">
+                <label for="eventDescription">Event description</label
+                ><textarea class="rtl" id="eventDescription"></textarea>
+              </div>
+              <div class="grid2">
+                <div class="field">
+                  <label for="eventDescriptionSize"
+                    >Information text size
+                    <output id="eventDescriptionSizeOut"></output></label
+                  ><input
+                    id="eventDescriptionSize"
+                    type="range"
+                    min="10"
+                    max="40"
+                  />
+                </div>
+                <div class="field">
+                  <label for="calendarIconColor">Calendar icon color</label
+                  ><input id="calendarIconColor" type="color" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="gregorian">Event Date</label
+                ><input id="gregorian" type="date" lang="dv-MV" />
+              </div>
+              <div class="field">
+                <span class="legend">Hijri Date</span>
+                <div class="grid3">
+                  <select id="hijriDay" aria-label="Hijri day"></select
+                  ><select id="hijriMonth" aria-label="Hijri month"></select
+                  ><select id="hijriYear" aria-label="Hijri year"></select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="eventTime">Event time</label
+                ><input id="eventTime" type="time" lang="dv-MV" />
+              </div>
+              <div class="grid2">
+                <label class="check" for="showGregorian"
+                  ><input id="showGregorian" type="checkbox" /> Show Event
+                  Date</label
+                ><label class="check" for="showHijri"
+                  ><input id="showHijri" type="checkbox" /> Show Hijri
+                  date</label
+                ><label class="check" for="showTime"
+                  ><input id="showTime" type="checkbox" /> Show time</label
+                ><label class="check" for="showCalendar"
+                  ><input id="showCalendar" type="checkbox" /> Show calendar
+                  icon</label
+                >
+              </div>
+            </div>
+          </details>
+          <details open>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path
+                    d="M4 20h16M6 20v-8l6-7 6 7v8M9 20v-5h6v5M4 11l8-8 8 8"
+                  /></svg></span
+              >އިމާމުންނާއި މިސްކިތުގެ ތަފްސީލް
+            </summary>
+            <div class="panel">
+              <div id="rows"></div>
+              <button class="btn" id="addRow" type="button">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 5v14M5 12h14" /></svg
+                >Add information row
+              </button>
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <circle cx="8" cy="9" r="2" />
+                  <path d="m4 17 5-5 3 3 2-2 6 5" /></svg></span
+              >ޕޯސްޓަރ ފޮޓޯ
+            </summary>
+            <div class="panel">
+              <label class="upload" for="backgroundUpload"
+                ><span
+                  ><strong>Choose a background photograph</strong
+                  ><small
+                    >PNG, JPG or WebP · stored only for this session</small
+                  ></span
+                ><input
+                  id="backgroundUpload"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+              /></label>
+              <div class="error" id="backgroundError"></div>
+              <div class="grid2">
+                <div class="field">
+                  <label for="bgMode">Image fit</label
+                  ><select id="bgMode">
+                    <option value="cover">Cover</option>
+                    <option value="contain">Contain</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="bgOpacity"
+                    >Opacity <output id="bgOpacityOut"></output></label
+                  ><input id="bgOpacity" type="range" min="0" max="100" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="bgZoom"
+                  >Scale / zoom <output id="bgZoomOut"></output></label
+                ><input id="bgZoom" type="range" min="50" max="220" />
+              </div>
+              <div class="grid2">
+                <div class="field">
+                  <label for="bgX"
+                    >Horizontal position <output id="bgXOut"></output></label
+                  ><input id="bgX" type="range" min="-100" max="100" />
+                </div>
+                <div class="field">
+                  <label for="bgY"
+                    >Vertical position <output id="bgYOut"></output></label
+                  ><input id="bgY" type="range" min="-100" max="100" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="photoOverlay"
+                  >Photo overlay <output id="photoOverlayOut"></output></label
+                ><input id="photoOverlay" type="range" min="0" max="90" />
+              </div>
+              <div class="subactions">
+                <button
+                  class="btn tiny btn-danger"
+                  id="removeBackground"
+                  type="button"
+                >
+                  Remove image</button
+                ><button class="btn tiny" id="resetBackground" type="button">
+                  Reset image controls
+                </button>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"
+                  /></svg></span
+              >ޕޯސްޓަރ ސެޓިންގްސް
+            </summary>
+            <div class="panel">
+              <div class="grid2">
+                <div class="field">
+                  <label for="navy">Navy background</label
+                  ><input id="navy" type="color" />
+                </div>
+                <div class="field">
+                  <label for="gold">Accent color</label
+                  ><input id="gold" type="color" />
+                </div>
+                <div class="field">
+                  <label for="mainText">Main poster text</label
+                  ><input id="mainText" type="color" />
+                </div>
+                <div class="field">
+                  <label for="overlayDarkness"
+                    >Background darkness
+                    <output id="overlayDarknessOut"></output></label
+                  ><input id="overlayDarkness" type="range" min="0" max="60" />
+                </div>
+              </div>
+              <div class="divider"></div>
+              <span class="legend">Main information box</span>
+              <div class="grid3">
+                <div class="field">
+                  <label for="panelColor">Box color</label
+                  ><input id="panelColor" type="color" />
+                </div>
+                <div class="field">
+                  <label for="panelTextColor">Text color</label
+                  ><input id="panelTextColor" type="color" />
+                </div>
+                <div class="field">
+                  <label for="panelOpacity"
+                    >Transparency <output id="panelOpacityOut"></output></label
+                  ><input id="panelOpacity" type="range" min="0" max="100" />
+                </div>
+              </div>
+              <div class="divider"></div>
+              <span class="legend">Mosque row boxes</span>
+              <div class="grid3">
+                <div class="field">
+                  <label for="rowLabelColor">Box color</label
+                  ><input id="rowLabelColor" type="color" />
+                </div>
+                <div class="field">
+                  <label for="rowLabelTextColor">Text color</label
+                  ><input id="rowLabelTextColor" type="color" />
+                </div>
+                <div class="field">
+                  <label for="rowLabelOpacity"
+                    >Transparency
+                    <output id="rowLabelOpacityOut"></output></label
+                  ><input id="rowLabelOpacity" type="range" min="0" max="100" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="contentScale"
+                  >Global content scale
+                  <output id="contentScaleOut"></output></label
+                ><input id="contentScale" type="range" min="75" max="115" />
+              </div>
+              <label class="check" for="showGuides"
+                ><input id="showGuides" type="checkbox" /> Show safe-area
+                guides</label
+              >
+              <div class="subactions">
+                <button class="btn tiny" id="resetDesign" type="button">
+                  Reset design
+                </button>
+              </div>
+            </div>
+          </details>
+          <details open>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" />
+                  <path d="M8 12h8M12 8v8" /></svg></span
+              >ޕޯސްޓަރ ކޮންޓެންޓް ސައިޒް އަދި މޫވް ކުރުމަށް
+            </summary>
+            <div class="panel">
+              <p class="layout-help">
+                Click any content on the poster, then drag it. Use arrow keys
+                for precise movement; hold Shift for 10-pixel steps.
+              </p>
+              <div class="field">
+                <label for="elementSelect">Selected layer</label
+                ><select id="elementSelect"></select>
+              </div>
+              <div class="grid2">
+                <div class="field">
+                  <label for="layoutX"
+                    >Horizontal <output id="layoutXOut"></output></label
+                  ><input id="layoutX" type="range" min="0" max="1080" />
+                </div>
+                <div class="field">
+                  <label for="layoutY"
+                    >Vertical <output id="layoutYOut"></output></label
+                  ><input id="layoutY" type="range" min="0" max="1350" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="layoutScale"
+                  >Selected size <output id="layoutScaleOut"></output></label
+                ><input id="layoutScale" type="range" min="35" max="220" />
+              </div>
+              <div class="layout-actions">
+                <button class="btn tiny" id="resetSelected" type="button">
+                  Reset selected</button
+                ><button class="btn tiny" id="resetLayout" type="button">
+                  Reset all positions
+                </button>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="summary-icon"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path d="M5 19 10 5h4l5 14M7 15h10M4 5h16" /></svg></span
+              >އަކުރު ފޮންޓު
+            </summary>
+            <div class="panel">
+              <div class="field">
+                <label for="fontChoice">Poster typeface</label
+                ><select id="fontChoice">
+                  <option value="Faruma">Faruma</option>
+                  <option value="auto">Automatic Thaana stack</option>
+                  <option value="MV Boli">MV Boli</option>
+                  <option value="Noto Sans Thaana">Noto Sans Thaana</option>
+                </select>
+              </div>
+              <p class="footnote">
+                Faruma is selected by default. If it is not installed on this
+                computer, the browser uses MV Boli or another available Thaana
+                font. You can also upload a local font below.
+              </p>
+              <label class="upload" for="fontUpload"
+                ><span
+                  ><strong>Choose a local font</strong
+                  ><small>TTF, OTF, WOFF or WOFF2</small></span
+                ><input
+                  id="fontUpload"
+                  type="file"
+                  accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2"
+              /></label>
+              <div class="error" id="fontError"></div>
+              <p class="footnote" id="fontStatus">
+                <span class="status-dot"></span>Using Faruma with Thaana
+                fallbacks
+              </p>
+            </div>
+          </details>
+        </div>
+        <div class="divider"></div>
+        <div class="subactions">
+          <button
+            class="btn mobile-export btn-primary"
+            id="mobileDownload"
+            type="button"
+          >
+            Download PNG</button
+          ><button class="btn btn-danger" id="resetAll" type="button">
+            Reset all content
+          </button>
+        </div>
+      </section>
+      <section class="preview" aria-label="Poster preview">
+        <div class="previewbar">
+          <strong>Live poster preview</strong
+          ><span>Click and drag content · 1080 × 1350 PNG</span>
+        </div>
+        <div class="canvasbox">
+          <canvas
+            id="poster"
+            width="1080"
+            height="1350"
+            tabindex="0"
+            aria-label="Generated event poster. Click an element and drag to move it."
+          ></canvas>
+        </div>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="assets/default-assets.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
