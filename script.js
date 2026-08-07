@@ -43,19 +43,19 @@
     "މަސްޖިދުއްރަޙްމާން",
   ];
   const leaderOptions = [
-    "އްލްފާޟިލް އަބްދުއްރަޙްމާން ޒާހިދު",
+    "އަލްފާޟިލް އަބްދުއްރަޙްމާން ޒާހިދު",
     "އަލްފާޟިލް މުޙައްމަދު މާޒިން މޫސާ",
-    "އްލްފާޟިލް އަލީ ރަޝީދު",
-    "އްލްފާޟިލް އަޙްމަދު މާހިލް މުޙައްމަދު",
-    "އްލްފާޟިލް އާދަމް ސަޢީދު",
+    "އަލްފާޟިލް އަލީ ރަޝީދު",
+    "އަލްފާޟިލް އަޙްމަދު މާހިލް މުޙައްމަދު",
+    "އަލްފާޟިލް އާދަމް ސަޢީދު",
     "އަލްހާފިޒް އައްބާދު ބިން އަފްޝަލް",
-    "އްލްފާޟިލް ޖައުޙަރީ އަލީ",
-    "އްލްފާޟިލް މުޙައްމަދު ޚަލަފް ޝަކީބް",
-    "އްލްފާޟިލް ނަސްރު ﷲ ޙަސަން",
-    "އްލްފާޟިލް މޫސާ ޝަފީގު",
-    "އްލްފާޟިލް އަޒުޔަދު އަޙްސަން",
-    "އްލްފާޟިލް ޛަކްވާން އަބްދުﷲ",
-    "އްލްފާޟިލް މުޙައްމަދު ނަޞީރު",
+    "އަލްފާޟިލް ޖައުޙަރީ އަލީ",
+    "އަލްފާޟިލް މުޙައްމަދު ޚަލަފް ޝަކީބް",
+    "އަލްފާޟިލް ނަސްރު ﷲ ޙަސަން",
+    "އަލްފާޟިލް މޫސާ ޝަފީގު",
+    "އަލްފާޟިލް އަޒުޔަދު އަޙްސަން",
+    "އަލްފާޟިލް ޛަކްވާން އަބްދުﷲ",
+    "އަލްފާޟިލް މުޙައްމަދު ނަޞީރު",
   ];
   const addressOptions = [
     "ނިރުހިޔާ، ހއ. ދިއްދޫ",
@@ -1909,8 +1909,16 @@
     if (confirm("Reset all poster content and design settings?")) resetAll();
   };
   // Export only the full-resolution canvas as a timestamped PNG.
-  function download() {
+  async function download() {
+    const downloadButtons = [$("downloadBtn"), $("mobileDownload")];
+    downloadButtons.forEach((button) => (button.disabled = true));
     try {
+      const loadedFonts = await document.fonts.load(
+        '16px "Faruma"',
+        "ދިވެހި",
+      );
+      if (!loadedFonts.length) throw new Error("Faruma font did not load");
+      await document.fonts.ready;
       drawPoster(true);
       const d = new Date(),
         stamp = [
@@ -1920,28 +1928,27 @@
           String(d.getHours()).padStart(2, "0"),
           String(d.getMinutes()).padStart(2, "0"),
         ].join("-");
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          drawPoster();
-          toast("The poster could not be exported. Try reloading the page.");
-          return;
-        }
-        const url = URL.createObjectURL(blob),
-          a = document.createElement("a");
-        a.download = `maldives-event-poster-${stamp}.png`;
-        a.href = url;
-        a.hidden = true;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        drawPoster();
-        toast("1080 × 1350 poster downloaded");
-      }, "image/png");
+      const blob = await new Promise((resolve) =>
+        canvas.toBlob(resolve, "image/png"),
+      );
+      if (!blob)
+        throw new Error("The canvas could not be converted to a PNG");
+      const url = URL.createObjectURL(blob),
+        a = document.createElement("a");
+      a.download = `maldives-event-poster-${stamp}.png`;
+      a.href = url;
+      a.hidden = true;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      toast("1080 × 1350 poster downloaded");
     } catch (error) {
-      drawPoster();
       console.error("Poster export failed", error);
-      toast("The poster could not be exported. Reload the page and try again.");
+      toast("Faruma could not be loaded. Reload the page and try again.");
+    } finally {
+      drawPoster();
+      downloadButtons.forEach((button) => (button.disabled = false));
     }
   }
   $("downloadBtn").onclick = download;
