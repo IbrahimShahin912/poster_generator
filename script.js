@@ -39,7 +39,7 @@
   // Replace these temporary entries with your real mosque, prayer-leader and address lists.
   const mosqueOptions = [
     "މަސްޖިދުއްޝަހީދު ޢުމަރު ޢަހްމަދު",
-    "މަސޮޖިދުއްޢުފްރާން",
+    "މަސްޖިދުއްޢުފްރާން",
     "މަސްޖިދުއްރަޙްމާން",
   ];
   const leaderOptions = [
