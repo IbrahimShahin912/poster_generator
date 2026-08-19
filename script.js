@@ -77,7 +77,7 @@
   const locationOptions = ["ހއ. ދިއްދޫ، ދިވެހިރާއްޖެ"];
   const defaults = {
     bismillah: "ބިސްމި ﷲِ އައްރަޙްމާނި އައްރަޙީމް",
-    bismillahWidth: 300,
+    bismillahWidth: 140,
     bismillahColor: "#ffffff",
     showBismillah: true,
     logoWidth: 86,

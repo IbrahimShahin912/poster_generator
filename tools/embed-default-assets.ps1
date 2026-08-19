@@ -6,7 +6,7 @@ $outputFile = Join-Path $assetsDirectory "default-assets.js"
 
 $assets = [ordered]@{
   background = @{ File = "background_1.jpg"; Mime = "image/jpeg" }
-  bismillah = @{ File = "bismi_2.png"; Mime = "image/png" }
+  bismillah = @{ File = "bismi_1.svg"; Mime = "image/svg+xml" }
   logo       = @{ File = "logo_maldives.png"; Mime = "image/png" }
 }
 
